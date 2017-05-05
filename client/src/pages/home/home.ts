@@ -42,7 +42,7 @@ export class HomePage {
     this.resetTranslationArr();
     let filters = {
       filter: this.filter.toLowerCase(),
-      pos: this.pos.toUpperCase(),
+      pos: this.pos,
       dateFrom: this.dateFrom,
       dateTo: this.dateTo
     };
@@ -245,5 +245,9 @@ export class HomePage {
  renderTranslationElement (synset, trgs, trgExt) {
    let retElem = synset? this.trgsRender(trgs) : this.trgsRender(trgExt);
    return retElem;
+ }
+ cancelPos(){
+   this.pos = ''
+   this.load();
  }
 }

@@ -6,8 +6,16 @@
 
 <ion-content padding>
   <h2>Welcome to Språkkraft!</h2>
-  Filter: <input type="text" [(ngModel)]="filter" (keyup)="filterChange()">
-  POS: <input type="text" [(ngModel)]="pos" (keyup)="filterChange()">
+    Filter: <input type="text" [(ngModel)]="filter" (keyup)="filterChange()">
+    <ion-item class="drop-down">
+    <ion-label>POS</ion-label>
+    <ion-select [(ngModel)]="pos" (ngModelChange)="filterChange()" (ionCancel)="cancelPos()">
+      <ion-option value="NN" >Noun</ion-option>
+      <ion-option value="VB">Verb</ion-option>
+      <ion-option value="JJ">Adjective</ion-option>
+      <ion-option value="RB">Adverb</ion-option>
+    </ion-select>
+  </ion-item>
   Date From: <input type="date" [(ngModel)]="dateFrom" [disabled]="isDisabled()">
   Date To: <input type="date"  [(ngModel)]="dateTo" [disabled]="isDisabled()">
   <button ion-button (click)="filterChange()"> Refresh  </button>
@@ -16,7 +24,8 @@
   <div style="width:50%;float:left;">
     <ion-list>
       <button ion-item *ngFor="let word of words" (click)="itemSelected(word)" [style.background-color]="itemColor(word)" [style.color]="itemTextColor(word)">
-        {{word.word}}: {{word.dateUpdated}}
+        {{word.word}}
+        <!--: {{word.dateUpdated}}-->
       </button>  
     </ion-list>
     <button ion-button  (click)="addReqInd()" [disabled]="addDisabled()">Add Word</button>    
