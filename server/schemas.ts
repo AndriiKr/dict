@@ -1,5 +1,9 @@
 import * as mongoose from "mongoose";
 
+mongoose.connect("mongodb://localhost/polydb1");
+
+const Schema = mongoose.Schema;
+
 interface IDictBench {
   _id: mongoose.Types.ObjectId,
   word: string,
@@ -14,7 +18,7 @@ interface IDictBench {
   }]
 };
 interface IDictBenchModel extends IDictBench, mongoose.Document{};
-var dictBenchSchema = new mongoose.Schema({
+const dictBenchSchema = new Schema({
     word: String,
     pos: String,
     status: String,
