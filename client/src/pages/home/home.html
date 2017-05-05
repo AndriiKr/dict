@@ -9,7 +9,8 @@
     Filter: <input type="text" [(ngModel)]="filter" (keyup)="filterChange()">
     <ion-item class="drop-down">
     <ion-label>POS</ion-label>
-    <ion-select [(ngModel)]="pos" (ngModelChange)="filterChange()" (ionCancel)="cancelPos()">
+    <ion-select [(ngModel)]="pos" (ngModelChange)="filterChange()">
+      <ion-option value="" >Any part of speech</ion-option>
       <ion-option value="NN" >Noun</ion-option>
       <ion-option value="VB">Verb</ion-option>
       <ion-option value="JJ">Adjective</ion-option>
@@ -24,8 +25,7 @@
   <div style="width:50%;float:left;">
     <ion-list>
       <button ion-item *ngFor="let word of words" (click)="itemSelected(word)" [style.background-color]="itemColor(word)" [style.color]="itemTextColor(word)">
-        {{word.word}}
-        <!--: {{word.dateUpdated}}-->
+        {{word.word}} : {{word.dateUpdated}}
       </button>  
     </ion-list>
     <button ion-button  (click)="addReqInd()" [disabled]="addDisabled()">Add Word</button>    

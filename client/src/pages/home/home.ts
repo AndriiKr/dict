@@ -49,7 +49,10 @@ export class HomePage {
     let req = this.core.load(filters).catch(this.handleError);
     req.subscribe(res => {
       if (!res) return;
-      this.words = res.json().data;   
+      this.words = res.json().data;
+      this.words.map((word) => {
+        return word.dateUpdated = word.dateUpdated.substr(0, 10);
+      });
     });   
     this.showTranslation = true;
     this.editMode = null;
@@ -245,9 +248,5 @@ export class HomePage {
  renderTranslationElement (synset, trgs, trgExt) {
    let retElem = synset? this.trgsRender(trgs) : this.trgsRender(trgExt);
    return retElem;
- }
- cancelPos(){
-   this.pos = ''
-   this.load();
  }
 }
