@@ -66,6 +66,7 @@ export class HomePage {
     this.showTranslation = true;
   }
    itemSelectedDetail (item) {
+    console.log(item);
     let curStr: string[] = [];
     let curStrWorking: string[] = [];
     this.currentDetail = item;
@@ -214,7 +215,8 @@ export class HomePage {
         alert('Error: ' + res.error);
       }
       else {
-        alert('Data Processed');    
+        this.editMode = this.editMode ? null : true; 
+        this.showTranslation = true;
       }      
     });
    this.getWordTrans ();
