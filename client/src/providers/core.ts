@@ -6,20 +6,21 @@ import 'rxjs/Rx';
 
 @Injectable()
 export class Core {
+  url:string = 'http://localhost:3500/api/';
 
   constructor(public http: Http,
               public platform: Platform) {
   }
 
-  public load (filters: any): Observable<any> {    
-    let url = 'http://localhost:3500/api/words/?'
+  public load (filters: any): Observable<any> {
+    const url = this.url + 'words/?' 
       + 'filter=' + (filters.filter || '') + '&pos=' + (filters.pos || '') + '&dateFrom=' + (filters.dateFrom || '') + '&dateTo=' + (filters.dateTo || '');
-    let req: Observable<any> = this.http.get(url); 
+    let req: Observable<any> = this.http.get(url);
     return req;
   }
 
   public getWordTrans (key): Observable<any> {
-    let url = 'http://localhost:3500/api/wordTransl/?'
+    const url = this.url + 'wordTransl/?'
       + 'word=' + (key || '') ;
     let req: Observable<any> = this.http.get(url);
        
@@ -62,7 +63,7 @@ export class Core {
     return mapped;
   }
 public updateTrans (filters: any, arr: any[]) {
-  let url = 'http://localhost:3500/api/updTrans';
+  const url = this.url + 'updTrans';
   let headers = new Headers();
   headers.append('Content-Type', 'text/plain');
   let stringToSend = JSON.stringify(arr);

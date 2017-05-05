@@ -38,11 +38,11 @@ export class HomePage {
               private core: Core) {
     this.load();
   }
-  load () {  
+  load () {
     this.resetTranslationArr();
     let filters = {
-      filter: this.filter,
-      pos: this.pos,
+      filter: this.filter.toLowerCase(),
+      pos: this.pos.toUpperCase(),
       dateFrom: this.dateFrom,
       dateTo: this.dateTo
     };
@@ -170,7 +170,7 @@ export class HomePage {
   getWordTrans () {
     let req = this.core.getWordTrans(this.current.word).catch(this.handleError);
     req.subscribe(res => {
-      this.singleArr = res;   
+      this.singleArr = res;  
     });
   }
   editTranslation () {
