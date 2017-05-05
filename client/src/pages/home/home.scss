@@ -1,0 +1,23 @@
+page-home {    
+div.relative {
+    position: relative;
+    left: 30px;
+    top: 50px;
+    border: 3px solid #73AD21;
+}
+
+div.absolute {
+    position: fixed;
+    top: 280px;
+    left: 10;
+    width: 100px;
+    height: 200px;
+    background-color: cadetblue;
+    border: 3px solid #73AD21;
+}
+}
+div.sameLine {
+float:left;
+background-color: black;
+width: 100px;
+}
