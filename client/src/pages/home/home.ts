@@ -52,7 +52,7 @@ export class HomePage {
       this.words = res.json().data;
       this.words.map(word => word.dateUpdated = word.dateUpdated.substr(0, 10));
     });   
-    this.showTranslation = true;
+    this.showTranslation = null;
     this.editMode = null;
   }
    handleError(error) {
@@ -72,7 +72,6 @@ export class HomePage {
 
   }
    itemSelectedDetail (item) {
-    console.log(item);
     let curStr: string[] = [];
     let curStrWorking: string[] = [];
     this.currentDetail = item;
@@ -150,13 +149,10 @@ export class HomePage {
       this.load();      
     });
   }
-  clearAll (){
-    this.posIns = '';
-    this.wordIns  = '';
-     }
   addReqInd () {
     this.addReq = this.addReq ? false : true;
-    this.clearAll();
+    this.posIns = '';
+    this.wordIns  = '';
      }
   filterCheck () {
     this.filterDis = this.filterDis ? null : true;
