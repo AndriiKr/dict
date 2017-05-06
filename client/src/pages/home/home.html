@@ -6,7 +6,6 @@
 
 <ion-content padding>
   <h2>Welcome to Språkkraft!</h2>
-  <p>
     Filter: <input type="text" [(ngModel)]="filter" (keyup)="filterChange()">
     <ion-item class="drop-down">
     <ion-label>POS</ion-label>
@@ -21,11 +20,10 @@
     Date From: <input type="date" [(ngModel)]="dateFrom" [disabled]="isDisabled()" (change)="filterChange()">
     Date To: <input type="date"  [(ngModel)]="dateTo" [disabled]="isDisabled()" (change)="filterChange()">
     <ion-checkbox (click)="filterCheck()" ></ion-checkbox> Disable Filter
-  </p>
   <p class="left-table">
     <ion-list>
       <button ion-item *ngFor="let word of words" (click)="itemSelected(word)" [ngClass]="{ 'left-table-item': itemColor(word) }">
-        {{word.word}} : {{word.dateUpdated}}
+        {{word.word}}
       </button>  
     </ion-list>
     <button ion-button  (click)="addReqInd()" [disabled]="addDisabled()">Add Word</button>    
@@ -39,6 +37,14 @@
         <button  ion-button (click)="editTranslation()"> Edit </button>
         <button ion-button (click)="addTranslation()"> Add Translation</button>
   </ion-list>
+  <ion-card class="info-card">
+  <ion-card-header>
+    Information
+  </ion-card-header>
+  <ion-card-content>
+    Created: {{current.dateUpdated}}
+  </ion-card-content>
+</ion-card>
 </p>
   <p class="absolute" *ngIf="addReq">
      Inserting new word:
@@ -60,6 +66,5 @@
     </p> 
     <button ion-button (click)="updateTranslation()"> Save </button>
     <button ion-button (click)='cancelEditTrans()' style="float: left"> Cancel </button>
-  </ion-list> 
-
+  </ion-list>
 </ion-content>

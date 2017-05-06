@@ -1,4 +1,4 @@
-page-home {    
+page-home {
     div.relative {
         position: relative;
         left: 30px;
@@ -64,6 +64,10 @@ page-home {
     .right-table {
         float:right;
         width:50%;
+
+        .info-card ion-card-header {
+            color: map-get($colors, primary);
+        }
 
         .right-table-item {
             color: white;
