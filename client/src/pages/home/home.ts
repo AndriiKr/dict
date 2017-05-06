@@ -50,9 +50,7 @@ export class HomePage {
     req.subscribe(res => {
       if (!res) return;
       this.words = res.json().data;
-      this.words.map((word) => {
-        return word.dateUpdated = word.dateUpdated.substr(0, 10);
-      });
+      this.words.map(word => word.dateUpdated = word.dateUpdated.substr(0, 10));
     });   
     this.showTranslation = true;
     this.editMode = null;

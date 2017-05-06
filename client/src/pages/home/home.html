@@ -6,6 +6,7 @@
 
 <ion-content padding>
   <h2>Welcome to Språkkraft!</h2>
+  <p>
     Filter: <input type="text" [(ngModel)]="filter" (keyup)="filterChange()">
     <ion-item class="drop-down">
     <ion-label>POS</ion-label>
@@ -16,12 +17,11 @@
       <ion-option value="JJ">Adjective</ion-option>
       <ion-option value="RB">Adverb</ion-option>
     </ion-select>
-  </ion-item>
-  Date From: <input type="date" [(ngModel)]="dateFrom" [disabled]="isDisabled()">
-  Date To: <input type="date"  [(ngModel)]="dateTo" [disabled]="isDisabled()">
-  <button ion-button (click)="filterChange()"> Refresh  </button>
-  <ion-checkbox (click)="filterCheck()" ></ion-checkbox> Disable Filter
-  <HR> 
+    </ion-item>
+    Date From: <input type="date" [(ngModel)]="dateFrom" [disabled]="isDisabled()" (change)="filterChange()">
+    Date To: <input type="date"  [(ngModel)]="dateTo" [disabled]="isDisabled()" (change)="filterChange()">
+    <ion-checkbox (click)="filterCheck()" ></ion-checkbox> Disable Filter
+  </p>
   <div style="width:50%;float:left;">
     <ion-list>
       <button ion-item *ngFor="let word of words" (click)="itemSelected(word)" [style.background-color]="itemColor(word)" [style.color]="itemTextColor(word)">
