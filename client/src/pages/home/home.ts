@@ -63,8 +63,13 @@ export class HomePage {
     this.current = item;
     this.curentWordInd = true;
     this.getWordTrans();
+    this.getWordInfo();
     this.editMode = null;
     this.showTranslation = true;
+  }
+
+  getWordInfo() {
+
   }
    itemSelectedDetail (item) {
     console.log(item);
@@ -82,18 +87,11 @@ export class HomePage {
     }
     this.currentDetailString  = this.arrayToString(curStr);
   }
-  itemColorDetail (item): string {
-    return item == this.currentDetail ? 'lightblue' : 'white';
+  itemColorDetail (item): Boolean {
+    return item == this.currentDetail ? true : false;
   }
-  itemTextColorDetail (item): string {
-    return item == this.currentDetail ? 'white' : 'black';
-  }
-  itemColor(item): string {
-    return item == this.current ? 'lightblue' : 'white';
-  }
-
-  itemTextColor (item): string {
-    return item == this.current ? 'white' : 'black';
+  itemColor(item): Boolean {
+    return item == this.current ? true : false;
   }
   filterChange () {
     this.load();
