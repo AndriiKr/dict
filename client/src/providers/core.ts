@@ -13,7 +13,7 @@ export class Core {
   }
 
   public load (filters: any): Observable<any> {
-    const url = this.url + 'words/?' 
+    const url = this.url + 'words/?'
       + 'filter=' + (filters.filter || '') + '&pos=' + (filters.pos || '') + '&dateFrom=' + (filters.dateFrom || '') + '&dateTo=' + (filters.dateTo || '');
     let req: Observable<any> = this.http.get(url);
     return req;
@@ -67,18 +67,18 @@ public updateTrans (filters: any, arr: any[]) {
   let headers = new Headers();
   headers.append('Content-Type', 'text/plain');
   let stringToSend = JSON.stringify(arr);
-  let req: Observable<any> = this.http.post(url, { word: filters.word, pos: filters.pos, stringArray: stringToSend }, { headers }); 
+  let req: Observable<any> = this.http.post(url, { word: filters.word, pos: filters.pos, stringArray: stringToSend }, { headers });
   return req;
   }
 public addWordFromFilter (filters: any) {
-  let url = 'http://localhost:3500/api/addWord';
+  let url =  this.url + 'addWord';
   let headers = new Headers();
   headers.append('Content-Type', 'text/plain');
   let req: Observable<any> = this.http.post(url, { word: filters.word, pos: filters.pos }, { headers }); 
   return req;
   }
 public addWordFromList (filters: any) {
-   let url = 'http://localhost:3500/api/addTrans';
+   let url = this.url + 'addTrans';
    let headers = new Headers();
    headers.append('Content-Type', 'text/plain');
    let req: Observable<any> = this.http.post(url, { word: filters.word, pos: filters.pos, from: filters.from}, { headers });   

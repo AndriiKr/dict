@@ -1,54 +1,8 @@
 page-home {
-    div.relative {
-        position: relative;
-        left: 30px;
-        top: 50px;
-        border: 3px solid #73AD21;
-    }
 
-    div.absolute {
-        width:40%;
-        position: fixed;
-        top: 280px;
-        left: 10;
-        width: 100px;
-        height: 200px;
-        background-color: cadetblue;
-        border: 3px solid #73AD21;
-
-        .save-button {
-            position: absolute; 
-            left: 20%; 
-            right: 20%; 
-            bottom: 5%;
-        }
-
-        .cancel-button {
-            position: absolute;
-            left: 40%; 
-            right: 20%; 
-            bottom: 5%;
-        }
-
-        .clear-all-button {
-            position: absolute; 
-            left: 60%; 
-            right: 20%; 
-            bottom: 5%; 
-        }
-    }
-
-    div.sameLine {
-    float:left;
-    background-color: black;
-    width: 100px;
-    }
-
-    .drop-down {
-        width: 20%;
+    .absolute {
         display: inline-block;
-        top: 10px;
-        padding-right: 16px;
+        width: 50%;
     }
 
     .left-table {
@@ -77,8 +31,16 @@ page-home {
         }
     }
 
-    .edit-input {
+    .editmod {
+        display: inline-block;
+        width: 50%;
+
+        p {
+            display: flex;
+        }
+
+        .edit-input {
         background-color:rosybrown;
-        width:200px;
+        }
     }
 }
