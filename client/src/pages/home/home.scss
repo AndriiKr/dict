@@ -37,10 +37,12 @@ page-home {
 
         p {
             display: flex;
+            margin-left: 10px;
         }
 
         .edit-input {
         background-color:rosybrown;
+        width: 100%;
         }
     }
 }

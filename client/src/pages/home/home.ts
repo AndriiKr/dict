@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-  import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import { FormsModule } from '@angular/forms'
 import 'rxjs/Rx';
 
@@ -75,10 +75,8 @@ export class HomePage {
     let curStr: string[] = [];
     let curStrWorking: string[] = [];
     this.currentDetail = item;
-    // curStrWorking = this.currentDetail.el1?  this.currentDetail.el1.trgs : [''];
     curStrWorking = this.currentDetail.el1.dataElem ? this.currentDetail.el1.dataElem.trgs : [''];
     if (typeof (curStrWorking) === "string") {
-      //curStr = this.currentDetail.el1.trgs.split(',');
       curStr = this.currentDetail.el1.dataElem.trgs.split(',');
     }
     else {
@@ -97,34 +95,6 @@ export class HomePage {
   }
   arrayToString(arr: string[]) {
     return !arr ? '' : arr.join('; ');
-  }
-  partsOfSpeech = [
-    'NN',
-    'VB'
-  ];
-  addWordFromFilter() {
-    this.filter = this.filter.trim();
-    if (this.partsOfSpeech.indexOf(this.pos) == -1) {
-      alert('Invalid POS');
-      return;
-    }
-    if (!this.filter) {
-      alert('Type the word, stupid!');
-      return;
-    }
-    let filters = {
-      word: this.filter,
-      pos: this.pos
-    };
-    let req = this.core.addWordFromFilter(filters).catch(this.handleError);
-    req.subscribe(res => {
-      if (!res) return;
-      if (res.error) {
-        alert('Error: ' + res.error);
-        return;
-      }
-      this.load();
-    });
   }
   addWordFromList() {
     let filters = {
@@ -171,13 +141,9 @@ export class HomePage {
     });
   }
   editTranslation() {
-    if (this.curentWordInd == true) {
-      this.editMode = this.editMode ? null : true;
-      this.showTranslation = null;
-    }
-    else {
-      alert('please, select a word');
-    }
+    this.singleArr[this.singleArr.length] = { el1: { trgExt: '' }, el2: { trgExt: '' } };
+    this.editMode = this.editMode ? null : true;
+    this.showTranslation = null;
   }
   cancelEditTrans() {
     this.editMode = this.editMode ? null : true;
@@ -191,6 +157,7 @@ export class HomePage {
   }
   transChange(trans, id) {
     let elem: any = document.getElementById(id);
+    console.log(elem);
     if (typeof trans.el1.dataElem !== 'undefined') {
       trans.el1.dataElem.trgs = elem.value;
     }
@@ -217,19 +184,12 @@ export class HomePage {
     });
     this.getWordTrans();
   }
-  addTranslation() {
-    if (this.curentWordInd == true) {
-      this.singleArr[this.singleArr.length] = { el1: { trgExt: '' }, el2: { trgExt: '' } };
-      this.editTranslation();
-    }
-    else {
-      alert('please select a word!');
-    }
-  }
-  deleteTranslation(trans, id) {
+  deleteTranslation(trans) {
     let r = confirm('Confirm delete - press OK');
     if (r == true) {
-      this.singleArr.splice(id, 1);
+      if (this.singleArr.indexOf(trans) > -1) {
+        this.singleArr.splice(this.singleArr.indexOf(trans), 1);
+      }
       this.updateTranslation();
     }
     else { alert(' Delete canceled'); }
@@ -240,6 +200,6 @@ export class HomePage {
   }
   renderTranslationElement(synset, trgs, trgExt) {
     let retElem = synset ? this.trgsRender(trgs) : this.trgsRender(trgExt);
-      return retElem;
+    return retElem;
   }
 }

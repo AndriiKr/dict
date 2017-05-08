@@ -35,25 +35,7 @@ router.get('/api/words', (req, res) => {
         res.json({ data: data });
     });
 });
-router.post('/api/addWord', function (req, res) {
-    let text = '';
-    req.setEncoding('utf8');
-    req.on('data', (chunk) => text += chunk);
-    req.on('end', () => {
-        let data = JSON.parse(text);
-        let word = DictBench(lang).create({
-            word: data.word,
-            pos: data.pos,
-            status: 'PND',
-            dateUpdated: new Date()
-        }, (err) => {
-            if (err) {
-                res.json({ error: err });
-            };
-            res.send({ success: true });
-        });
-    });
-});
+
 router.post('/api/addTrans', (req, res) => {
     let text = '';
     req.setEncoding('utf8');
@@ -67,7 +49,7 @@ router.post('/api/addTrans', (req, res) => {
             dateUpdated: new Date()
         }, (err) => {
             if (err) {
-                res.json({ 
+                res.json({
                     status: false,
                     error: err
                 });
@@ -77,20 +59,21 @@ router.post('/api/addTrans', (req, res) => {
         });
     });
 });
-router.get('/api/wordTransl', function (req, res) {
+
+router.get('/api/wordTransl', (req, res) => {
     let opts: any = {};
     if (req.query.word) {
         opts.word = req.query.word;
     }
     let query = DictBench(lang).find(opts);
-    query.exec(function (err, data: any) {
+    query.exec( (err, data: any) => {
         data = data.map(x => x.toObject());
         if (err) {
             res.json({ error: err });
             return;
         };
         let query = DictBench(altLang).find(opts);
-        query.exec(function (err, dataAlt: any) {
+        query.exec( (err, dataAlt: any) => {
             dataAlt = dataAlt.map(x => x.toObject());
             if (err) {
                 res.json({ error: err });
@@ -100,7 +83,8 @@ router.get('/api/wordTransl', function (req, res) {
         });
     })
 });
-router.post('/api/updTrans', function (req, res) {
+
+router.post('/api/updTrans', (req, res) => {
     let text = '';
     req.setEncoding('utf8');
     req.on('data', (chunk) => text += chunk);
@@ -109,20 +93,18 @@ router.post('/api/updTrans', function (req, res) {
         let dataArray = JSON.parse(data.stringArray);
         let arrIns: any = [];
         let arrInsExt: any = [];
-        dataArray.forEach(function (arrayItem) {
+        dataArray.forEach((arrayItem) => {
             if (arrayItem.el1.dataElem && (typeof (arrayItem.el1.dataElem.trgs) === "string")) {
                 let bufferArray = arrayItem.el1.dataElem.trgs.split(';').map(function (item) { return item.trim() });
                 arrayItem.el1["synset"] = arrayItem.el2.altElem ? arrayItem.el2.altElem.synset : null;
                 arrayItem.el1["trgs"] = bufferArray;
                 arrIns.push(arrayItem.el1);
-            }
-            if (arrayItem.el1.dataElem && !(typeof (arrayItem.el1.dataElem.trgs) === "string")) {
                 if (arrayItem.el1.dataElem["trgs"].length > 0) {
                     arrIns.push(arrayItem.el1.dataElem);
                 }
             }
         });
-        dataArray.forEach(function (arrayItemExt) {
+        dataArray.forEach((arrayItemExt) => {
             let buffInsExt: any = [];
             if (arrayItemExt.el1.trgExt && (typeof (arrayItemExt.el1.trgExt) === "string")) {
                 let bufferArray = arrayItemExt.el1.trgExt.split(';').map(function (item) { return item.trim() });

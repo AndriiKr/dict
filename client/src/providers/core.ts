@@ -70,13 +70,6 @@ public updateTrans (filters: any, arr: any[]) {
   let req: Observable<any> = this.http.post(url, { word: filters.word, pos: filters.pos, stringArray: stringToSend }, { headers });
   return req;
   }
-public addWordFromFilter (filters: any) {
-  let url =  this.url + 'addWord';
-  let headers = new Headers();
-  headers.append('Content-Type', 'text/plain');
-  let req: Observable<any> = this.http.post(url, { word: filters.word, pos: filters.pos }, { headers }); 
-  return req;
-  }
 public addWordFromList (filters: any) {
    let url = this.url + 'addTrans';
    let headers = new Headers();

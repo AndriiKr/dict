@@ -48,9 +48,9 @@
       <button ion-item *ngFor="let trans of singleArr" (click)="itemSelectedDetail(trans)" [ngClass]="{ 'right-table-item': itemColorDetail(trans) }">    
         {{renderTranslationElement (trans.el2.altElem?.synset, trans.el1.dataElem?.trgs, trans.el1?.trgExt)}}  
         {{renderTranslationElement (trans.el2.altElem?.synset, trans.el2.altElem?.trgs, trans.el2?.trgExt)}}
+        {{trans.el2.altElem?.synset}}
         </button>
-      <button ion-button (click)="editTranslation()"> Edit </button>
-      <button ion-button (click)="addTranslation()"> Add Translation</button>
+      <button ion-button (click)="editTranslation()"> Edit Translation</button>
     </ion-list>
     <ion-card class="info-card">
       <ion-card-header>
@@ -67,7 +67,7 @@
         <ion-label color="primary">Inserting new word</ion-label>
       </ion-item>
       <ion-item>
-        <ion-input placeholder="Word" type="text" [(ngModel)]='wordIns' value='test'></ion-input>
+        <ion-input placeholder="Word" type="text" [(ngModel)]='wordIns'></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>POS</ion-label>
@@ -85,12 +85,9 @@
   </p>
   <ion-list class="editmod" *ngIf="editMode">
     <p *ngFor="let trans of (singleArr); let i = index" (click)="itemSelectedDetail(trans)" [ngClass]="{ 'right-table-item': itemColorDetail(trans) }">
-      <ion-item>
-        <ion-input class="edit-input" type="text" [id]="'trans' + i" 
-          value="{{renderTranslationElement (trans.el1.altElem?.synset, trans.el1.dataElem?.trgs, trans.el1?.trgExt)}}{{renderTranslationElement (trans.el2.altElem?.synset, trans.el2.altElem?.trgs, trans.el2?.trgExt)}}"
-          (input)="transChange(trans, 'trans' + i)"></ion-input>
-      </ion-item>
-      <button ion-button color="danger" (click)="deleteTranslation(trans,i)">Delete</button>
+      <input class="edit-input" type="text" [id]="'trans' + i" value="{{renderTranslationElement (trans.el1.altElem?.synset, trans.el1.dataElem?.trgs, trans.el1?.trgExt)}}{{renderTranslationElement (trans.el2.altElem?.synset, trans.el2.altElem?.trgs, trans.el2?.trgExt)}}"
+        (input)="transChange(trans, 'trans' + i)">
+      <button ion-button color="danger" (click)="deleteTranslation(trans)">Delete</button>
     </p>
     <button ion-button (click)="updateTranslation()"> Save </button>
     <button ion-button (click)='cancelEditTrans()' style="float: left"> Cancel </button>
