@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {Observable} from 'rxjs/Observable';
-import { FormsModule} from '@angular/forms'
+  import { Observable } from 'rxjs/Observable';
+import { FormsModule } from '@angular/forms'
 import 'rxjs/Rx';
 
 import { Http, Headers } from '@angular/http';
@@ -32,13 +32,13 @@ export class HomePage {
   editMode: Boolean = null;
   addButtonDisabled: Boolean = null;
   singleArr: any[] = [];
-  
+
   constructor(public navCtrl: NavController,
-              public http: Http,
-              private core: Core) {
+    public http: Http,
+    private core: Core) {
     this.load();
   }
-  load () {
+  load() {
     this.resetTranslationArr();
     let filters = {
       filter: this.filter.toLowerCase(),
@@ -51,15 +51,15 @@ export class HomePage {
       if (!res) return;
       this.words = res.json().data;
       this.words.map(word => word.dateUpdated = word.dateUpdated.substr(0, 10));
-    });   
+    });
     this.showTranslation = null;
     this.editMode = null;
   }
-   handleError(error) {
-      console.error(error);
-      return Observable.throw(error.json().error || 'Server error');
+  handleError(error) {
+    console.error(error);
+    return Observable.throw(error.json().error || 'Server error');
   }
-  itemSelected (item) {
+  itemSelected(item) {
     this.current = item;
     this.curentWordInd = true;
     this.getWordTrans();
@@ -71,38 +71,38 @@ export class HomePage {
   getWordInfo() {
 
   }
-   itemSelectedDetail (item) {
+  itemSelectedDetail(item) {
     let curStr: string[] = [];
     let curStrWorking: string[] = [];
     this.currentDetail = item;
-   // curStrWorking = this.currentDetail.el1?  this.currentDetail.el1.trgs : [''];
-    curStrWorking = this.currentDetail.el1.dataElem?  this.currentDetail.el1.dataElem.trgs : [''];
-    if (typeof(curStrWorking) === "string") { 
+    // curStrWorking = this.currentDetail.el1?  this.currentDetail.el1.trgs : [''];
+    curStrWorking = this.currentDetail.el1.dataElem ? this.currentDetail.el1.dataElem.trgs : [''];
+    if (typeof (curStrWorking) === "string") {
       //curStr = this.currentDetail.el1.trgs.split(',');
       curStr = this.currentDetail.el1.dataElem.trgs.split(',');
     }
     else {
       curStr = curStrWorking;
     }
-    this.currentDetailString  = this.arrayToString(curStr);
+    this.currentDetailString = this.arrayToString(curStr);
   }
-  itemColorDetail (item): Boolean {
+  itemColorDetail(item): Boolean {
     return item == this.currentDetail ? true : false;
   }
   itemColor(item): Boolean {
     return item == this.current ? true : false;
   }
-  filterChange () {
+  filterChange() {
     this.load();
   }
-  arrayToString (arr: string[]) {
+  arrayToString(arr: string[]) {
     return !arr ? '' : arr.join('; ');
   }
   partsOfSpeech = [
     'NN',
     'VB'
   ];
-  addWordFromFilter () {
+  addWordFromFilter() {
     this.filter = this.filter.trim();
     if (this.partsOfSpeech.indexOf(this.pos) == -1) {
       alert('Invalid POS');
@@ -115,7 +115,7 @@ export class HomePage {
     let filters = {
       word: this.filter,
       pos: this.pos
-    };  
+    };
     let req = this.core.addWordFromFilter(filters).catch(this.handleError);
     req.subscribe(res => {
       if (!res) return;
@@ -123,20 +123,21 @@ export class HomePage {
         alert('Error: ' + res.error);
         return;
       }
-      this.load();      
+      this.load();
     });
   }
-  addWordFromList () {  
+  addWordFromList() {
     let filters = {
       word: this.wordIns.trim(),
       pos: this.posIns.trim(),
       from: 10
-      };  
+    };
     let req = this.core.addWordFromList(filters).catch(this.handleError);
     req.subscribe(res => {
+      const response = JSON.parse(res._body)
       if (!res) return;
-      if (res.error) {
-        alert('Error: ' + res.error);
+      if (response.error) {
+        alert('Word already exists');
         return;
       }
       alert('Your new word was successfully added');
@@ -146,63 +147,63 @@ export class HomePage {
       this.dateTo = null;
       this.filterDis = true;
       this.addReqInd();
-      this.load();      
+      this.load();
     });
   }
-  addReqInd () {
+  addReqInd() {
     this.addReq = this.addReq ? false : true;
     this.posIns = '';
-    this.wordIns  = '';
-     }
-  filterCheck () {
+    this.wordIns = '';
+  }
+  filterCheck() {
     this.filterDis = this.filterDis ? null : true;
-     }
-  isDisabled () {
+  }
+  isDisabled() {
     return this.filterDis;
-    }
-  addDisabled () {
-    return this.editMode ? true : null;  
-  }   
-  getWordTrans () {
+  }
+  addDisabled() {
+    return this.editMode ? true : null;
+  }
+  getWordTrans() {
     let req = this.core.getWordTrans(this.current.word).catch(this.handleError);
     req.subscribe(res => {
-      this.singleArr = res;  
+      this.singleArr = res;
     });
   }
-  editTranslation () {
+  editTranslation() {
     if (this.curentWordInd == true) {
-      this.editMode = this.editMode ? null : true;   
+      this.editMode = this.editMode ? null : true;
       this.showTranslation = null;
-     }
+    }
     else {
       alert('please, select a word');
     }
   }
-  cancelEditTrans () {
-    this.editMode = this.editMode ? null : true; 
-    this.showTranslation = true;  
+  cancelEditTrans() {
+    this.editMode = this.editMode ? null : true;
+    this.showTranslation = true;
     this.getWordTrans();
   }
-  trgsRender (trgs) {
+  trgsRender(trgs) {
     if (typeof trgs == 'string') return trgs;
     if (typeof trgs == 'undefined' || trgs == null) return '';
     return trgs.join(';');
   }
-  transChange (trans, id) {
-    let elem:any = document.getElementById(id);
+  transChange(trans, id) {
+    let elem: any = document.getElementById(id);
     if (typeof trans.el1.dataElem !== 'undefined') {
       trans.el1.dataElem.trgs = elem.value;
     }
     else {
       if (typeof trans.el1.trgExt !== 'undefined')
-        trans.el1.trgExt = elem.value;  
+        trans.el1.trgExt = elem.value;
     }
   }
-  updateTranslation () {
+  updateTranslation() {
     let filters = {
       word: this.current.word,
       pos: this.current.pos
-    };    
+    };
     let req = this.core.updateTrans(filters, this.singleArr).catch(this.handleError);
     req.subscribe(res => {
       if (!res) return;
@@ -210,35 +211,35 @@ export class HomePage {
         alert('Error: ' + res.error);
       }
       else {
-        this.editMode = this.editMode ? null : true; 
+        this.editMode = this.editMode ? null : true;
         this.showTranslation = true;
-      }      
+      }
     });
-   this.getWordTrans ();
-  } 
-  addTranslation () {
-    if (this.curentWordInd == true ) {
-      this.singleArr[this.singleArr.length] = {el1: {trgExt: ''}, el2: {trgExt: ''}};
+    this.getWordTrans();
+  }
+  addTranslation() {
+    if (this.curentWordInd == true) {
+      this.singleArr[this.singleArr.length] = { el1: { trgExt: '' }, el2: { trgExt: '' } };
       this.editTranslation();
     }
     else {
       alert('please select a word!');
     }
   }
-  deleteTranslation (trans, id) {
+  deleteTranslation(trans, id) {
     let r = confirm('Confirm delete - press OK');
     if (r == true) {
-      this.singleArr.splice(id,1);
-      this.updateTranslation(); 
+      this.singleArr.splice(id, 1);
+      this.updateTranslation();
     }
-    else {alert(' Delete canceled');}
+    else { alert(' Delete canceled'); }
   }
 
- resetTranslationArr () {
-   this.singleArr = [];  
-   }
- renderTranslationElement (synset, trgs, trgExt) {
-   let retElem = synset? this.trgsRender(trgs) : this.trgsRender(trgExt);
-   return retElem;
- }
+  resetTranslationArr() {
+    this.singleArr = [];
+  }
+  renderTranslationElement(synset, trgs, trgExt) {
+    let retElem = synset ? this.trgsRender(trgs) : this.trgsRender(trgExt);
+      return retElem;
+  }
 }
