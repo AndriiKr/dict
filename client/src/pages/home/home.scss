@@ -1,5 +1,9 @@
 page-home {
 
+    .table-header ion-item {
+        color: map-get($colors, primary);
+    }
+
     .absolute {
         display: inline-block;
         width: 50%;
@@ -41,7 +45,8 @@ page-home {
         }
 
         .edit-input {
-        background-color:rosybrown;
+        height: 35px;
+        margin-top: 2px;
         width: 100%;
         }
     }

@@ -32,12 +32,14 @@ export class HomePage {
   editMode: Boolean = null;
   addButtonDisabled: Boolean = null;
   singleArr: any[] = [];
+  inputValue: Boolean = null;
 
   constructor(public navCtrl: NavController,
     public http: Http,
     private core: Core) {
     this.load();
   }
+
   load() {
     this.resetTranslationArr();
     let filters = {
@@ -157,7 +159,6 @@ export class HomePage {
   }
   transChange(trans, id) {
     let elem: any = document.getElementById(id);
-    console.log(elem);
     if (typeof trans.el1.dataElem !== 'undefined') {
       trans.el1.dataElem.trgs = elem.value;
     }
@@ -184,22 +185,17 @@ export class HomePage {
     });
     this.getWordTrans();
   }
-  deleteTranslation(trans) {
-    let r = confirm('Confirm delete - press OK');
-    if (r == true) {
-      if (this.singleArr.indexOf(trans) > -1) {
-        this.singleArr.splice(this.singleArr.indexOf(trans), 1);
-      }
-      this.updateTranslation();
-    }
-    else { alert(' Delete canceled'); }
-  }
 
   resetTranslationArr() {
     this.singleArr = [];
   }
   renderTranslationElement(synset, trgs, trgExt) {
     let retElem = synset ? this.trgsRender(trgs) : this.trgsRender(trgExt);
+    return retElem;
+  }
+    renderTranslationElementEdit(synset, trgs, trgExt) {
+    let retElem = synset ? this.trgsRender(trgs) : this.trgsRender(trgExt);
+    this.inputValue = retElem ? true : null;
     return retElem;
   }
 }

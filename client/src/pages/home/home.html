@@ -44,14 +44,39 @@
     <button ion-button (click)="addReqInd()" [disabled]="addDisabled()">Add Word</button>
   </p>
   <p class="right-table" *ngIf="showTranslation">
-    <ion-list>
-      <button ion-item *ngFor="let trans of singleArr" (click)="itemSelectedDetail(trans)" [ngClass]="{ 'right-table-item': itemColorDetail(trans) }">    
-        {{renderTranslationElement (trans.el2.altElem?.synset, trans.el1.dataElem?.trgs, trans.el1?.trgExt)}}  
+    <ion-grid>
+      <ion-row class="table-header">
+        <ion-item>Spanish</ion-item>
+        <ion-item>English</ion-item>
+        <ion-item>Synset</ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-list>
+            <button ion-item *ngFor="let trans of singleArr" (click)="itemSelectedDetail(trans)">    
+        {{renderTranslationElement (trans.el2.altElem?.synset, trans.el1.dataElem?.trgs, trans.el1?.trgExt)}}
+        </button>
+          </ion-list>
+        </ion-col>
+        <ion-col>
+          <ion-list>
+            <button ion-item *ngFor="let trans of singleArr" (click)="itemSelectedDetail(trans)">    
         {{renderTranslationElement (trans.el2.altElem?.synset, trans.el2.altElem?.trgs, trans.el2?.trgExt)}}
+        </button>
+          </ion-list>
+        </ion-col>
+        <ion-col>
+          <ion-list>
+            <button ion-item *ngFor="let trans of singleArr" (click)="itemSelectedDetail(trans)">    
         {{trans.el2.altElem?.synset}}
         </button>
-      <button ion-button (click)="editTranslation()"> Edit Translation</button>
-    </ion-list>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <button ion-button (click)="editTranslation()"> Edit Translation</button>
+      </ion-row>
+    </ion-grid>
     <ion-card class="info-card">
       <ion-card-header>
         Information
@@ -84,10 +109,37 @@
     <button ion-button (click)="addReqInd()" class="cancel-button"> Cancel </button>
   </p>
   <ion-list class="editmod" *ngIf="editMode">
-    <p *ngFor="let trans of (singleArr); let i = index" (click)="itemSelectedDetail(trans)" [ngClass]="{ 'right-table-item': itemColorDetail(trans) }">
-      <input class="edit-input" type="text" [id]="'trans' + i" value="{{renderTranslationElement (trans.el1.altElem?.synset, trans.el1.dataElem?.trgs, trans.el1?.trgExt)}}{{renderTranslationElement (trans.el2.altElem?.synset, trans.el2.altElem?.trgs, trans.el2?.trgExt)}}"
-        (input)="transChange(trans, 'trans' + i)">
-      <button ion-button color="danger" (click)="deleteTranslation(trans)">Delete</button>
+    <p>
+      <ion-grid>
+        <ion-row class="table-header">
+          <ion-item>Spanish</ion-item>
+          <ion-item>English</ion-item>
+          <ion-item>Synset</ion-item>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-list *ngFor="let trans of (singleArr); let i = index" (click)="itemSelectedDetail(trans)" [ngClass]="{ 'right-table-item': itemColorDetail(trans) }">
+              <input  class="edit-input" type="text" [id]="'trans' + i" placeholder="Add new word here" value="{{renderTranslationElementEdit (trans.el2.altElem?.synset, trans.el1.dataElem?.trgs, trans.el1?.trgExt)}}"
+                (input)="transChange(trans, 'trans' + i)">
+              <!--<button *ngIf="!inputValue" ion-item (click)="itemSelectedDetail(trans)"> {{renderTranslationElementEdit (trans.el2.altElem?.synset, trans.el1.dataElem?.trgs, trans.el1?.trgExt)}}</button>-->
+            </ion-list>
+          </ion-col>
+          <ion-col>
+            <ion-list>
+              <button ion-item *ngFor="let trans of singleArr" (click)="itemSelectedDetail(trans)">    
+        {{renderTranslationElementEdit (trans.el2.altElem?.synset, trans.el2.altElem?.trgs, trans.el2?.trgExt)}}
+        </button>
+            </ion-list>
+          </ion-col>
+          <ion-col>
+            <ion-list>
+              <button ion-item *ngFor="let trans of singleArr" (click)="itemSelectedDetail(trans)">    
+        {{trans.el2.altElem?.synset}}
+        </button>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </p>
     <button ion-button (click)="updateTranslation()"> Save </button>
     <button ion-button (click)='cancelEditTrans()' style="float: left"> Cancel </button>
