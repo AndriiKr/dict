@@ -45,9 +45,17 @@ page-home {
         }
 
         .edit-input {
-        height: 35px;
-        margin-top: 2px;
-        width: 100%;
+            margin-top: 9px;
+            width: 100%;
+            padding: 3px 0px;
+        }
+
+        .new-input {
+            display: block;
+            padding: 3px 0px;
+            margin-top: -9px;
+            margin-left: 10px;
+            width: 33%;
         }
     }
 }

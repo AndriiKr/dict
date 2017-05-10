@@ -66,14 +66,14 @@ router.get('/api/wordTransl', (req, res) => {
         opts.word = req.query.word;
     }
     let query = DictBench(lang).find(opts);
-    query.exec( (err, data: any) => {
+    query.exec((err, data: any) => {
         data = data.map(x => x.toObject());
         if (err) {
             res.json({ error: err });
             return;
         };
         let query = DictBench(altLang).find(opts);
-        query.exec( (err, dataAlt: any) => {
+        query.exec((err, dataAlt: any) => {
             dataAlt = dataAlt.map(x => x.toObject());
             if (err) {
                 res.json({ error: err });
@@ -93,27 +93,46 @@ router.post('/api/updTrans', (req, res) => {
         let dataArray = JSON.parse(data.stringArray);
         let arrIns: any = [];
         let arrInsExt: any = [];
-        dataArray.forEach((arrayItem) => {
-            if (arrayItem.el1.dataElem && (typeof (arrayItem.el1.dataElem.trgs) === "string")) {
-                let bufferArray = arrayItem.el1.dataElem.trgs.split(';').map(function (item) { return item.trim() });
-                arrayItem.el1["synset"] = arrayItem.el2.altElem ? arrayItem.el2.altElem.synset : null;
-                arrayItem.el1["trgs"] = bufferArray;
-                arrIns.push(arrayItem.el1);
-                if (arrayItem.el1.dataElem["trgs"].length > 0) {
-                    arrIns.push(arrayItem.el1.dataElem);
+        dataArray.forEach((arrayItemExt) => {
+            if (arrayItemExt.el1.dataElem) {
+                if (typeof (arrayItemExt.el1.dataElem.trgs) === "string") {
+                    let bufferArray = arrayItemExt.el1.dataElem.trgs.split(';').map((item) => { return item.trim() });
+                    arrayItemExt.el1["synset"] = arrayItemExt.el2.altElem ? arrayItemExt.el2.altElem.synset : null;
+                    arrayItemExt.el1["trgs"] = bufferArray;
+                    if (arrayItemExt.el1.dataElem.trgs.length > 0) {
+                        arrIns.push(arrayItemExt.el1);
+                    }
+                    if (arrayItemExt.el1.dataElem["trgs"].length > 0) {
+                        arrIns.push(arrayItemExt.el1.dataElem);
+                    }
+                } else {
+                    arrayItemExt.el1.dataElem.trgs = arrayItemExt.el1.dataElem.trgs[0];
+                    if (typeof (arrayItemExt.el1.dataElem.trgs) === "string") {
+                        if (arrayItemExt.el1.dataElem["trgs"].length > 0) {
+                            arrIns.push(arrayItemExt.el1.dataElem);
+                        }
+                    }
                 }
             }
-        });
-        dataArray.forEach((arrayItemExt) => {
+
             let buffInsExt: any = [];
             if (arrayItemExt.el1.trgExt && (typeof (arrayItemExt.el1.trgExt) === "string")) {
-                let bufferArray = arrayItemExt.el1.trgExt.split(';').map(function (item) { return item.trim() });
+                let bufferArray = arrayItemExt.el1.trgExt.split(';').map((item) => { return item.trim() });
                 arrayItemExt.el1["trgExt"] = bufferArray;
             }
             if (arrayItemExt.el1["trgExt"] && arrayItemExt.el1["trgExt"].length > 0) {
                 arrInsExt.push(arrayItemExt.el1["trgExt"]);
             }
         });
+        if (arrIns.length > 1) {
+            arrIns.splice(1, 1);
+        }
+        // arrIns.forEach((item) => {
+        //     console.log("arrIns", item);
+        // });
+        // arrInsExt.forEach((item) => {
+        //     console.log("arrInsExt", item);
+        // });
         DictBench(lang).findOneAndUpdate(
             { word: data.word },
             { $set: { "trgs": arrIns, "trgExt": arrInsExt, "dateUpdated": Date() } },

@@ -33,6 +33,7 @@ export class HomePage {
   addButtonDisabled: Boolean = null;
   singleArr: any[] = [];
   inputValue: Boolean = null;
+  InputWord: string = '';
 
   constructor(public navCtrl: NavController,
     public http: Http,
@@ -168,10 +169,14 @@ export class HomePage {
     }
   }
   updateTranslation() {
+    this.singleArr.push({ el1: {trgExt: this.InputWord }, el2: { trgExt: [] } });
     let filters = {
       word: this.current.word,
       pos: this.current.pos
     };
+    // this.singleArr.forEach ( (item) => {
+    //   console.log(item.dataElem);
+    // });
     let req = this.core.updateTrans(filters, this.singleArr).catch(this.handleError);
     req.subscribe(res => {
       if (!res) return;
@@ -184,6 +189,7 @@ export class HomePage {
       }
     });
     this.getWordTrans();
+    this.InputWord = '';
   }
 
   resetTranslationArr() {
