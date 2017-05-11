@@ -106,12 +106,13 @@ router.post('/api/updTrans', (req, res) => {
                         arrIns.push(arrayItemExt.el1.dataElem);
                     }
                 } else {
-                    arrayItemExt.el1.dataElem.trgs = arrayItemExt.el1.dataElem.trgs[0];
-                    if (typeof (arrayItemExt.el1.dataElem.trgs) === "string") {
-                        if (arrayItemExt.el1.dataElem["trgs"].length > 0) {
-                            arrIns.push(arrayItemExt.el1.dataElem);
+                    arrayItemExt.el1.dataElem.trgs.forEach((trg) => {
+                        if (typeof (trg) === "string") {
+                            if (trg.length > 0) {
+                                arrIns.push(arrayItemExt.el1.dataElem);
+                            }
                         }
-                    }
+                    });
                 }
             }
 
@@ -127,12 +128,6 @@ router.post('/api/updTrans', (req, res) => {
         if (arrIns.length > 1) {
             arrIns.splice(1, 1);
         }
-        // arrIns.forEach((item) => {
-        //     console.log("arrIns", item);
-        // });
-        // arrInsExt.forEach((item) => {
-        //     console.log("arrInsExt", item);
-        // });
         DictBench(lang).findOneAndUpdate(
             { word: data.word },
             { $set: { "trgs": arrIns, "trgExt": arrInsExt, "dateUpdated": Date() } },

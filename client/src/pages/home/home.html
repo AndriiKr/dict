@@ -53,23 +53,23 @@
       <ion-row>
         <ion-col>
           <ion-list>
-            <button ion-item *ngFor="let trans of singleArr" (click)="itemSelectedDetail(trans)">    
+            <ion-item  *ngFor="let trans of singleArr">    
         {{renderTranslationElement (trans.el2.altElem?.synset, trans.el1.dataElem?.trgs, trans.el1?.trgExt)}}
-        </button>
+        </ion-item>
           </ion-list>
         </ion-col>
         <ion-col>
           <ion-list>
-            <button ion-item *ngFor="let trans of singleArr" (click)="itemSelectedDetail(trans)">    
+            <ion-item *ngFor="let trans of singleArr">    
         {{renderTranslationElement (trans.el2.altElem?.synset, trans.el2.altElem?.trgs, trans.el2?.trgExt)}}
-        </button>
+        </ion-item>
           </ion-list>
         </ion-col>
         <ion-col>
           <ion-list>
-            <button ion-item *ngFor="let trans of singleArr" (click)="itemSelectedDetail(trans)">    
+            <ion-item *ngFor="let trans of singleArr">    
         {{trans.el2.altElem?.synset}}
-        </button>
+        </ion-item>
           </ion-list>
         </ion-col>
       </ion-row>
@@ -115,23 +115,23 @@
         <ion-item>English</ion-item>
         <ion-item>Synset</ion-item>
       </ion-row>
-      <ion-row *ngFor="let trans of (singleArr); let i = index" (click)="itemSelectedDetail(trans)" [ngClass]="{ 'right-table-item': itemColorDetail(trans) }">
+      <ion-row *ngFor="let trans of (singleArr); let i = index">
         <ion-col>
           <ion-list>
-            <input *ngIf="!inputValue" class="edit-input" type="text" [id]="'trans' + i" placeholder="Add new word here" value="{{renderTranslationElementEdit (trans.el2.altElem?.synset, trans.el1.dataElem?.trgs, trans.el1?.trgExt)}}"
+            <input *ngIf="!emptyValue" class="edit-input" type="text" [id]="'trans' + i" placeholder="Add new word here" value="{{renderTranslationElementEdit (trans.el2.altElem?.synset, trans.el1.dataElem?.trgs, trans.el1?.trgExt)}}"
               (input)="transChange(trans, 'trans' + i)">
-            <button *ngIf="inputValue" ion-item (click)="itemSelectedDetail(trans)"> {{renderTranslationElementEdit (trans.el2.altElem?.synset, trans.el1.dataElem?.trgs, trans.el1?.trgExt)}}</button>
+            <ion-item *ngIf="emptyValue" > {{renderTranslationElementEdit (trans.el2.altElem?.synset, trans.el1.dataElem?.trgs, trans.el1?.trgExt)}}</ion-item>
           </ion-list>
         </ion-col>
         <ion-col>
-          <button ion-item (click)="itemSelectedDetail(trans)">    
+          <ion-item>    
         {{renderTranslationElementEdit (trans.el2.altElem?.synset, trans.el2.altElem?.trgs, trans.el2?.trgExt)}}
-        </button>
+        </ion-item>
         </ion-col>
         <ion-col>
-          <button ion-item (click)="itemSelectedDetail(trans)">    
+          <ion-item>    
         {{trans.el2.altElem?.synset}}
-        </button>
+        </ion-item>
         </ion-col>
       </ion-row>
     </ion-grid>

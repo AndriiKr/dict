@@ -32,7 +32,7 @@ export class HomePage {
   editMode: Boolean = null;
   addButtonDisabled: Boolean = null;
   singleArr: any[] = [];
-  inputValue: Boolean = null;
+  emptyValue: Boolean = null;
   InputWord: string = '';
 
   constructor(public navCtrl: NavController,
@@ -174,9 +174,6 @@ export class HomePage {
       word: this.current.word,
       pos: this.current.pos
     };
-    // this.singleArr.forEach ( (item) => {
-    //   console.log(item.dataElem);
-    // });
     let req = this.core.updateTrans(filters, this.singleArr).catch(this.handleError);
     req.subscribe(res => {
       if (!res) return;
@@ -201,7 +198,7 @@ export class HomePage {
   }
     renderTranslationElementEdit(synset, trgs, trgExt) {
     let retElem = synset ? this.trgsRender(trgs) : this.trgsRender(trgExt);
-    this.inputValue = retElem ? true : null;
+    this.emptyValue = retElem ? true : null;
     return retElem;
   }
 }
